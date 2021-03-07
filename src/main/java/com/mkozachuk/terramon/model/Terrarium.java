@@ -2,7 +2,6 @@ package com.mkozachuk.terramon.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -11,15 +10,19 @@ import org.springframework.stereotype.Component;
 public class Terrarium {
 
     private int defaultFanSpeed;
-    private double tempMin;
-    private double tempMax;
-    private double humidityMin;
-    private double humidityMax;
+    private double tempMinAlert;
+    private double tempMaxAlert;
+    private double humidityMinAlert;
+    private double humidityMaxAlert;
+    private double humidityMinOkLevel;
+    private double humidityMaxOkLevel;
+
+    private boolean isAlert;
 
 
-    private Fan fan;
-    private TempSensor tempSensor;
-    private HumiditySensor humiditySensor;
+    private Fan fan = new Fan();
+    private TempSensor tempSensor = new TempSensor();
+    private HumiditySensor humiditySensor = new HumiditySensor();
 
 
     public void startFan(){
@@ -51,7 +54,7 @@ public class Terrarium {
     }
 
     public void lowDownHumidity (){
-        if(getCurrentHumidity() >= humidityMax) {
+        if(getCurrentHumidity() >= humidityMaxAlert) {
             if (!getFanStatus()) {
                 startFan();
             }
@@ -59,7 +62,7 @@ public class Terrarium {
     }
 
     public void increaseHumidity (){
-        if(getCurrentHumidity() <= humidityMin) {
+        if(getCurrentHumidity() <= humidityMinAlert) {
             if (getFanStatus()) {
                 stopFan();
             }

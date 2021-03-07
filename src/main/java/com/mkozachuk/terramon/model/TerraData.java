@@ -17,9 +17,9 @@ public class TerraData {
     private Long id;
 
     // in C
-    private float temperature;
+    private double temperature;
     //in %
-    private float humidity;
+    private double humidity;
 
     private Date addAt;
 }
