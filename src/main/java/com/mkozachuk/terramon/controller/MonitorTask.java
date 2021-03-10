@@ -76,6 +76,7 @@ public class MonitorTask implements Runnable {
         TerraData actualTerraData = new TerraData();
         actualTerraData.setAddAt(new Date());
         actualTerraData.setTemperature(terrarium.getCurrentTemp());
+        actualTerraData.setTemperatureFromHumiditySensor(terrarium.getCurrentTempFromHumiditySensor());
         actualTerraData.setHumidity(terrarium.getCurrentHumidity());
         log.info("Current TerraData {}", actualTerraData);
         return actualTerraData;
