@@ -18,6 +18,7 @@ public class TerraData {
 
     // in C
     private double temperature;
+    private double temperatureFromHumiditySensor;
     //in %
     private double humidity;
 

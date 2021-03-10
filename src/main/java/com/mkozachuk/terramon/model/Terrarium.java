@@ -17,7 +17,10 @@ public class Terrarium {
     private double humidityMinOkLevel;
     private double humidityMaxOkLevel;
 
-    private boolean isAlert;
+    private boolean alert;
+    private boolean monitorOn;
+
+    private long defaultMonitorDaley = 300000;
 
 
     private Fan fan = new Fan();
@@ -47,6 +50,10 @@ public class Terrarium {
 
     public double getCurrentTemp(){
         return tempSensor.getCurrentTemp();
+    }
+
+    public double getCurrentTempFromHumiditySensor(){
+        return humiditySensor.getCurrentTemp();
     }
 
     public double getCurrentHumidity(){
