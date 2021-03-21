@@ -24,7 +24,7 @@ public class NoteController {
     }
 
     public List<Note> allNotes(){
-        return (List<Note>) noteRepository.findAll();
+        return noteRepository.findAllByOrderByAddAtDesc();
     }
 
     public List<Note> last3Notes(){

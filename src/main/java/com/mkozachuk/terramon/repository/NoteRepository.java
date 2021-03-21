@@ -8,4 +8,7 @@ import java.util.List;
 public interface NoteRepository extends CrudRepository<Note, Long> {
 
     List<Note> findTop3ByOrderByAddAtDesc();
+
+    List<Note> findAllByOrderByAddAtDesc();
+
 }
