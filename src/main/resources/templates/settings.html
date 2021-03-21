@@ -65,7 +65,7 @@
 
                 </li>
                 <li>
-                    <a th:href="@{/home}">
+                    <a th:href="@{/}">
                         <i class="fas fa-info-circle"></i>About</a>
                 </li>
             </ul>
@@ -99,7 +99,7 @@
                         <i class="fas fa-cogs"></i>Settings</a>
                 </li>
                 <li>
-                    <a th:href="@{/home}">
+                    <a th:href="@{/}">
                         <i class="fas fa-info-circle"></i>About</a>
                 </li>
             </ul>
@@ -439,55 +439,6 @@
     </div>
 </div>
 
-
-<!--<h3>Terrarium settings</h3>-->
-<!--<p th:text="'Min temp =' + *{terrarium.getTempMinAlert()}"></p>-->
-<!--<p th:text="'Max temp =' + *{terrarium.getTempMaxAlert()}"></p>-->
-<!--<p th:text="'Min humidity =' + *{terrarium.getHumidityMinAlert()}"></p>-->
-<!--<p th:text="'Max temp =' + *{terrarium.getHumidityMaxAlert()}"></p>-->
-<!--<p th:text="'Fan speed =' + *{terrarium.getDefaultFanSpeed()}"></p>-->
-
-<!--<form method="POST" th:action="@{/data/settings}" th:object="${terrarium}">-->
-<!--    <h3>Update your settings :</h3>-->
-
-<!--    <label for="tempMin">Min Temp </label>-->
-<!--    <input id="tempMin" type="text" th:field="*{tempMinAlert}"/>-->
-<!--    &lt;!&ndash;    <span class="validationError"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:if="${#fields.hasErrors('tempMin')}"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:errors="*{tempMinAlert}">Wrong format</span>&ndash;&gt;-->
-<!--    <br/>-->
-
-<!--    <label for="tempMax">Max Temp </label>-->
-<!--    <input id="tempMax" type="text" th:field="*{tempMaxAlert}"/>-->
-<!--    &lt;!&ndash;    <span class="validationError"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:if="${#fields.hasErrors('tempMax')}"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:errors="*{tempMaxAlert}">Wrong format</span>&ndash;&gt;-->
-<!--    <br/>-->
-
-<!--    <label for="humidityMin">Min humidity </label>-->
-<!--    <input id="humidityMin" type="text" th:field="*{humidityMinAlert}"/>-->
-<!--    &lt;!&ndash;    <span class="validationError"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:if="${#fields.hasErrors('humidityMin')}"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:errors="*{humidityMinAlert}">Wrong format</span>&ndash;&gt;-->
-<!--    <br/>-->
-
-<!--    <label for="humidityMax">Max humidity </label>-->
-<!--    <input id="humidityMax" type="text" th:field="*{humidityMaxAlert}"/>-->
-<!--    &lt;!&ndash;    <span class="validationError"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:if="${#fields.hasErrors('humidityMax')}"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:errors="*{humidityMaxAlert}">Wrong format</span>&ndash;&gt;-->
-<!--    <br/>-->
-
-<!--    <label for="defaultFanSpeed">defaultFanSpeed </label>-->
-<!--    <input id="defaultFanSpeed" type="text" th:field="*{defaultFanSpeed}"/>-->
-<!--    &lt;!&ndash;    <span class="validationError"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:if="${#fields.hasErrors('defaultFanSpeed')}"&ndash;&gt;-->
-<!--    &lt;!&ndash;          th:errors="*{defaultFanSpeed}">Wrong format</span>&ndash;&gt;-->
-<!--    <br/>-->
-
-
-<!--    <input type="submit" value="Update settings"/>-->
-<!--</form>-->
 
 <!-- Jquery JS-->
 <script th:src="@{/vendor/jquery-3.2.1.min.js}"></script>

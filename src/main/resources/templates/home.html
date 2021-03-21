@@ -69,7 +69,7 @@
 
                     </li>
                     <li>
-                        <a th:href="@{/home}">
+                        <a th:href="@{/}">
                             <i class="fas fa-info-circle"></i>About</a>
                     </li>
                 </ul>
@@ -103,7 +103,7 @@
                             <i class="fas fa-cogs"></i>Settings</a>
                     </li>
                     <li class="active">
-                        <a th:href="@{/home}">
+                        <a th:href="@{/}">
                             <i class="fas fa-info-circle"></i>About</a>
                     </li>
                 </ul>
@@ -130,13 +130,24 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="overview-wrap">
+                                <!--                        alerts-->
+
+                                <div class="alert alert-success" role="alert" th:style="*{isNewVersion} ? 'display:block' : 'display:none'">
+                                    Update is available!
+                                    <a th:href="${urlToUpdate}" class="alert-link">Download link</a>
+                                </div>
+
+                            </div>
+                        </div>
 
                         <div class="col-md-10">
                             <div class="card">
                                 <img class="card-img-top" th:src="@{images/terraMonJungle.png}" alt="TerraMon">
                                 <div class="card-body">
                                     <h4 class="card-title mb-3">Your Personal Smart Terrarium Monitor</h4>
-                                    <p class="card-text" th:text="'Version : ' + ${version}">Version:</p>
+                                    <p class="card-text" th:text="'Version : ' + ${version} + '     '">Version: <a th:href="${urlToUpdate}" th:class="${isNewVersion} ? 'btn btn-outline-danger btn-sm' : 'btn btn-outline-success btn-sm'" th:text="${isNewVersion} ? 'Update' : 'Up to date'">Check for Update</a></p>
                                     <br>
                                     <p class="card-text">Your Telegram Bot : <a th:text="${botname}" th:href="'https://t.me/' + ${botname}">botname</a></p>
                                     <br>
