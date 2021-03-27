@@ -17,13 +17,15 @@ public class MonitorTask implements Runnable {
     private TerraDataController terraDataController;
     private TelegramBot bot;
     private String alertMessage;
+    private PiController piController;
 
 
     @Autowired
-    public MonitorTask(Terrarium terrarium, TerraDataController terraDataController, @Lazy TelegramBot bot) {
+    public MonitorTask(Terrarium terrarium, TerraDataController terraDataController, @Lazy TelegramBot bot, PiController piController) {
         this.terrarium = terrarium;
         this.terraDataController = terraDataController;
         this.bot = bot;
+        this.piController = piController;
     }
 
 
@@ -47,32 +49,41 @@ public class MonitorTask implements Runnable {
             terrarium.setAlert(true);
             alertMessage = "Too Wet! Current humidity is : " + actualTerraData.getHumidity();
             log.warn("Too Wet! Current humidity is : {}", actualTerraData.getHumidity());
+            terrarium.getFan().setOn(piController.startFan());
         }
 
         if (actualTerraData.getHumidity() <= terrarium.getHumidityMinAlert()) {
             terrarium.setAlert(true);
             alertMessage = "Too Dry! Current humidity is : " + actualTerraData.getHumidity();
             log.warn("Too Dry! Current humidity is : {}", actualTerraData.getHumidity());
-        }
-        if (terrarium.isAlert()) {
-            bot.sendAlertToUser(alertMessage);
-        }
-        if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxOkLevel()) {
-            log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {}", actualTerraData.getHumidity());
-            terrarium.startFan();
+            terrarium.getFan().setOn(piController.stopFan());
         }
 
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxOkLevel()) {
+            log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {}", actualTerraData.getHumidity());
+            terrarium.getFan().setOn(piController.startFan());
+        }
+
+        if (actualTerraData.getHumidity() <= terrarium.getHumidityMinOkLevel()) {
             log.warn("A bit too Dry! Stopping the fan...\nCurrent humidity is : {}", actualTerraData.getHumidity());
-            terrarium.stopFan();
-        } else {
+            terrarium.getFan().setOn(piController.stopFan());
+        }
+        if (terrarium.isAlert()) {
+            terrarium.setAlertMsg(alertMessage);
+            bot.sendAlertToUser(alertMessage);
+            terrarium.setAlert(false);
+        }else {
             terrarium.setAlert(false);
             actualTerraData = null;
         }
 
     }
 
-    public TerraData statsCheckTask() {
+    private TerraData statsCheckTask() {
+        terrarium.getTempSensor().setCurrentTemp(piController.checkFromTemp());
+        terrarium.getHumiditySensor().setCurrentTemp(piController.checkFromHumidity().getOrDefault("temp", 0.0));
+        terrarium.getHumiditySensor().setCurrentHumidity(piController.checkFromHumidity().getOrDefault("humidity", 0.0));
+
         TerraData actualTerraData = new TerraData();
         actualTerraData.setAddAt(new Date());
         actualTerraData.setTemperature(terrarium.getCurrentTemp());
