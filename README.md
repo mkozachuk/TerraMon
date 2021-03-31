@@ -55,6 +55,7 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
     <br>
     <strong>5V Fan</strong>
 </p>
+
 - Transistor's collector: connects to black(-) wire on fan
 - Transistor's base: connects to 100 Ohm Resistor and to GPIO pin 13
 - Transistor's emitter: connects to ground GPIO pin
