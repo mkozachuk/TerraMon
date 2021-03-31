@@ -32,15 +32,15 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 - 1x NPN transistor (BC546B or similar)
 
 <p align="center">
+        <strong>TerraMon Schematic</strong>
+        <br>
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/all.jpg" width="600" alt="TerraMon-circuit">
-    <br>
-    <strong>TerraMon Schematic</strong>
 </p>
 
 <p align="center">
+         <strong>DHT21 (AM2301) Temperature & Humidity Sensor</strong>
+        <br>
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/dht21.jpg" width="600" alt="TerraMon-DHT21">
-    <br>
-    <strong>DHT21 (AM2301) Temperature & Humidity Sensor</strong>
 </p>
 
 - Connect red (+) wire to 3V3 pin
@@ -49,9 +49,9 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 - Place 1kΩ resistor between 3V3 and data wire (pull-up).
 
 <p align="center">
+        <strong>DS18B20 Temperature Sensor</strong>
+        <br>
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/ds18d20.jpg" width="600" alt="TerraMon-DS18B20">
-    <br>
-    <strong>DS18B20 Temperature Sensor</strong>
 </p>
 
 - Connect red (+) wire to 3V3 pin
@@ -60,9 +60,9 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 - Place 4.7kΩ resistor between 3V3 and data wire (pull-up).
 
 <p align="center">
+        <strong>5V Fan</strong>
+        <br>
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/fan.jpg" width="600" alt="TerraMon-Fan-Circuit">
-    <br>
-    <strong>5V Fan</strong>
 </p>
 
 - Transistor's collector: connects to black(-) wire on fan
