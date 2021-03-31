@@ -79,3 +79,39 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 - Fan red wire(+): connects to 5V GPIO pin on raspberry pi 3 
 
 #
+
+## Dashboard
+
+**Find your dashboard here:**
+- http://teramon.local:8080/
+- http://your-rpi-local-ip:8080/
+
+#
+
+<p align="center">
+        <strong>Dashboard</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/dashboard.jpg">
+</p>
+
+<p align="center">
+        <strong>Settings</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/ssettings.jpg">
+</p>
+
+<p align="center">
+        <strong>Notes</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/nnotes.jpg">
+</p>
+
+<p align="center">
+        <strong>About</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/aabout.jpg">
+</p>
+
+#
+
+
