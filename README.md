@@ -43,12 +43,21 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
     <strong>DHT21 (AM2301) Temperature & Humidity Sensor</strong>
 </p>
 
+- Connect red (+) wire to 3V3 pin
+- Connect black wire (-) to ground (GND) pin
+- Connect data wire to GPIO4 pin
+- Place 1kΩ resistor between 3V3 and data wire (pull-up).
 
 <p align="center">
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/ds18d20.jpg" width="600" alt="TerraMon-DS18B20">
     <br>
     <strong>DS18B20 Temperature Sensor</strong>
 </p>
+
+- Connect red (+) wire to 3V3 pin
+- Connect black wire (-) to ground (GND) pin
+- Connect data wire to GPIO4 pin
+- Place 4.7kΩ resistor between 3V3 and data wire (pull-up).
 
 <p align="center">
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/fan.jpg" width="600" alt="TerraMon-Fan-Circuit">
@@ -57,6 +66,6 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 </p>
 
 - Transistor's collector: connects to black(-) wire on fan
-- Transistor's base: connects to 100 Ohm Resistor and to GPIO pin 13
-- Transistor's emitter: connects to ground GPIO pin
+- Transistor's base: connects to 100 Ohm Resistor and to GPIO13 pin
+- Transistor's emitter: connects to ground (GND) pin
 - Fan red wire(+): connects to 5V GPIO pin on raspberry pi 3 
