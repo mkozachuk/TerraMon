@@ -45,7 +45,7 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 
 - Connect red (+) wire to 3V3 pin
 - Connect black wire (-) to ground (GND) pin
-- Connect data wire to GPIO4 pin
+- Connect data wire to GPIO25 pin
 - Place 1kΩ resistor between 3V3 and data wire (pull-up).
 
 <p align="center">
