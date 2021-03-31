@@ -83,7 +83,7 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 ## Dashboard
 
 **Find your dashboard here:**
-- http://teramon.local:8080/
+- http://terramon.local:8080/
 - http://your-rpi-local-ip:8080/
 
 #
