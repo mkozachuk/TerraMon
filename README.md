@@ -114,4 +114,19 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 
 #
 
+## Device
 
+**TerraMon Case available on Thingiverse**
+https://www.thingiverse.com/thing:4813437
+
+<p align="center">
+        <strong>TerraMon Case</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-device.jpg">
+</p>
+
+<p align="center">
+        <strong>TerraMon Device</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-device1.jpg">
+</p>
