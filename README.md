@@ -32,8 +32,8 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 ## Hardware
 
 **Requirements:**
-- Raspberry Pi ( I use Raspbery Pi Zero W)
-- DHT21 (AM2301) Temperature & Humidi sensor
+- Raspberry Pi ( I use Raspberry Pi Zero W)
+- DHT21 (AM2301) Temperature & Humidity sensor
 - DS18B20 Temperature Sensor
 - 1x 4.7kΩ resistor
 - 1x 1kΩ resistor
