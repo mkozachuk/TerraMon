@@ -1,4 +1,4 @@
-package com.mkozachuk.terramon.controller;
+package com.mkozachuk.terramon.service;
 
 import com.pi4j.component.temperature.TemperatureSensor;
 import com.pi4j.component.temperature.impl.TmpDS18B20DeviceType;
@@ -11,19 +11,22 @@ import org.springframework.stereotype.Controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
-public class PiController {
+public class PiService {
     private static final String LIB_NOT_PRESENT_MESSAGE = "CAN'T FIND Adafruit Library";
     private static final String ERROR_READING = "ERROR_READING";
     private W1Master master = new W1Master();
     private List<W1Device> w1Devices;
     private Date lastUpdate;
 
-    final GpioController gpio = GpioFactory.getInstance();
-    final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "MyFan");
+    private final GpioController gpio = GpioFactory.getInstance();
+    private final GpioPinDigitalOutput pin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_23, "MyFan");
 
     private DecimalFormat decimalFormat = new DecimalFormat("#.#");
 
@@ -85,27 +88,32 @@ public class PiController {
             e.printStackTrace();
             e.getLocalizedMessage();
         }
-
         return dhtData;
-
     }
 
     public boolean startFan() {
 
         pin.setState(PinState.HIGH);
         pin.setShutdownOptions(true, PinState.LOW);
-
         return true;
-
     }
 
     public boolean stopFan() {
         pin.setShutdownOptions(true, PinState.LOW);
         pin.setState(PinState.LOW);
-
         return false;
-
     }
 
+    public void powerOff(){
+        String cmd = "sudo poweroff";
+        try {
+            log.warn("Power Off starting...");
+            Process p = Runtime.getRuntime().exec(cmd.split(" "));
+            p.waitFor();
+        }catch (Exception e){
+            log.error("Exception when sudo poweroff");
+            e.getStackTrace();
+        }
 
+    }
 }

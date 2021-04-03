@@ -1,22 +1,20 @@
-package com.mkozachuk.terramon.controller;
+package com.mkozachuk.terramon.service;
 
 import com.mkozachuk.terramon.model.TerraData;
 import com.mkozachuk.terramon.repository.TerraDataRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
-@Controller
-public class TerraDataController {
+@Service
+public class TerraDataService {
     private TerraDataRepository terraDataRepository;
 
-
-
     @Autowired
-    public TerraDataController(TerraDataRepository terraDataRepository){
+    public TerraDataService(TerraDataRepository terraDataRepository){
         this.terraDataRepository = terraDataRepository;
     }
 
@@ -30,10 +28,5 @@ public class TerraDataController {
         return (List<TerraData>) terraDataRepository.findAll();
 
     }
-
-
-
-
-
 
 }
