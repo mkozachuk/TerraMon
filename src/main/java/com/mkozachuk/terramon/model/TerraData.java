@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class TerraData {
+public class TerraData implements Exportable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +23,14 @@ public class TerraData {
     private double humidity;
 
     private Date addAt;
+
+    @Override
+    public String[] getTableHeaders() {
+        return new String[]{"ID", "Temperature1", "Temperature2", "Humidity", "Add Date"};
+    }
+
+    @Override
+    public String[] getNameMapping() {
+        return new String[]{"id", "temperature", "temperatureFromHumiditySensor", "humidity", "addAt"};
+    }
 }
