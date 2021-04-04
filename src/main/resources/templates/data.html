@@ -59,12 +59,12 @@
                             <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                     </li>
                     <li>
-                        <a th:href="@{/data/notes}">
+                        <a th:href="@{/notes}">
                             <i class="fas fa-clipboard"></i>Notes</a>
                     </li>
 
                     <li>
-                        <a th:href="@{/data/settings}">
+                        <a th:href="@{/settings}">
                             <i class="fas fa-cogs"></i>Settings</a>
 
                     </li>
@@ -94,12 +94,12 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/data/notes}">
+                        <a th:href="@{/notes}">
                             <i class="fas fa-clipboard"></i>Notes</a>
                     </li>
 
                     <li>
-                        <a th:href="@{/data/settings}">
+                        <a th:href="@{/settings}">
                             <i class="fas fa-cogs"></i>Settings</a>
                     </li>
                     <li>
@@ -278,7 +278,7 @@
                                     <div class="bg-overlay bg-overlay--blue"></div>
                                     <h3>
                                         <i class="fas fa-clipboard"></i>Last notes</h3>
-                                    <a class="au-btn-plus" th:href="@{/data/notes}">
+                                    <a class="au-btn-plus" th:href="@{/notes}">
                                         <i class="zmdi zmdi-plus"></i>
                                     </a>
                                 </div>
@@ -290,13 +290,13 @@
                                              th:each="note : ${last3Notes}">
                                             <div class="au-task__item-inner">
                                                 <h5 class="task">
-                                                    <a th:href="@{/data/notes}" th:text="*{note.title}">title</a>
+                                                    <a th:href="@{/notes}" th:text="*{note.title}">title</a>
                                                 </h5>
                                                 <span class="time" th:text="*{note.addAt}">time</span>
                                             </div>
                                         </div>
                                         <div class="au-task__footer">
-                                            <a class="au-btn btn-primary" th:href="@{/data/notes}">Find all</a>
+                                            <a class="au-btn btn-primary" th:href="@{/notes}">Find all</a>
                                         </div>
                                     </div>
 
@@ -328,20 +328,17 @@
 <script th:src="@{vendor/bootstrap-4.1/popper.min.js}"></script>
 <script th:src="@{vendor/bootstrap-4.1/bootstrap.min.js}"></script>
 <!-- Vendor JS       -->
-<script th:src="@{vendor/slick/slick.min.js}">
-</script>
+<script th:src="@{vendor/slick/slick.min.js}"></script>
 <script th:src="@{vendor/wow/wow.min.js}"></script>
 <script th:src="@{vendor/animsition/animsition.min.js}"></script>
-<script th:src="@{vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}">
-</script>
+<script th:src="@{vendor/bootstrap-progressbar/bootstrap-progressbar.min.js}"></script>
 <script th:src="@{vendor/counter-up/jquery.waypoints.min.js}"></script>
 <script th:src="@{vendor/counter-up/jquery.counterup.min.js}">
 </script>
 <script th:src="@{vendor/circle-progress/circle-progress.min.js}"></script>
 <script th:src="@{vendor/perfect-scrollbar/perfect-scrollbar.js}"></script>
 <script th:src="@{vendor/chartjs/Chart.bundle.min.js}"></script>
-<script th:src="@{vendor/select2/select2.min.js}">
-</script>
+<script th:src="@{vendor/select2/select2.min.js}"></script>
 
 <!-- Main JS-->
 <script th:src="@{js/main.js}"></script>
@@ -501,7 +498,6 @@
             labels: {
                 formatter: function (val) {
                     return val.toFixed(1);
-                    //     // return (val / 1000000).toFixed(0);
                 },
             },
             title: {
@@ -515,7 +511,6 @@
             labels: {
                 formatter: function (val) {
                     return val.toFixed(1);
-                    //     // return (val / 1000000).toFixed(0);
                 },
             },
             title: {
@@ -598,7 +593,6 @@
             labels: {
                 formatter: function (val) {
                     return val.toFixed(1);
-                    //     // return (val / 1000000).toFixed(0);
                 },
             },
             title: {
@@ -680,7 +674,6 @@
             labels: {
                 formatter: function (val) {
                     return val.toFixed(1);
-                    //     // return (val / 1000000).toFixed(0);
                 },
             },
             title: {
