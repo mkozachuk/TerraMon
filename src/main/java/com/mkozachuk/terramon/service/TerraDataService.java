@@ -1,5 +1,6 @@
 package com.mkozachuk.terramon.service;
 
+import com.mkozachuk.terramon.exceptions.TerraDataNotFoundException;
 import com.mkozachuk.terramon.model.TerraData;
 import com.mkozachuk.terramon.repository.TerraDataRepository;
 import lombok.Getter;
@@ -43,9 +44,32 @@ public class TerraDataService {
         return terraData;
     }
 
+    public TerraData findById(Long id){
+       return terraDataRepository.findById(id).orElseThrow(() -> new TerraDataNotFoundException(id));
+    }
+
     public List<TerraData> allTerraData() {
         return (List<TerraData>) terraDataRepository.findAll();
 
+    }
+
+    public void deleteById(Long id){
+        terraDataRepository.deleteById(id);
+    }
+
+    public TerraData replaysTerraData(TerraData newTerraData, Long id){
+        return terraDataRepository.findById(id)
+                .map(terraData -> {
+                    terraData.setTemperature(newTerraData.getTemperature());
+                    terraData.setTemperatureFromHumiditySensor(newTerraData.getTemperatureFromHumiditySensor());
+                    terraData.setHumidity(newTerraData.getHumidity());
+                    terraData.setAddAt(newTerraData.getAddAt());
+                    return terraDataRepository.save(terraData);
+                })
+                .orElseGet(() -> {
+                    newTerraData.setId(id);
+                    return terraDataRepository.save(newTerraData);
+                });
     }
 
     public void prepareDataLists() {

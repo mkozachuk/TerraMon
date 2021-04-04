@@ -1,5 +1,6 @@
 package com.mkozachuk.terramon.service;
 
+import com.mkozachuk.terramon.exceptions.NoteNotFoundException;
 import com.mkozachuk.terramon.model.Note;
 import com.mkozachuk.terramon.repository.NoteRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,10 @@ public class NoteService {
 
     private long dayInMilliseconds = 24 * 60 * 60 * 1000;
 
-    public void save(Note note){
+    public Note save(Note note){
         noteRepository.save(note);
         log.info("Note has been saved : {}", note);
+        return note;
     }
 
     public List<Note> allNotes(){
@@ -32,6 +34,28 @@ public class NoteService {
 
     public List<Note> last3Notes(){
         return noteRepository.findTop3ByOrderByAddAtDesc();
+    }
+
+    public Note findById(Long id){
+        return noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
+    }
+
+    public void deleteById(Long id){
+        noteRepository.deleteById(id);
+    }
+
+    public Note replaysNote(Note newNote, Long id){
+       return noteRepository.findById(id)
+                .map(note -> {
+                    note.setTitle(newNote.getTitle());
+                    note.setText(newNote.getText());
+                    note.setAddAt(newNote.getAddAt());
+                    return noteRepository.save(note);
+                })
+                .orElseGet(() -> {
+                    newNote.setId(id);
+                    return noteRepository.save(newNote);
+                });
     }
 
     public void addDefaultNotes(){
