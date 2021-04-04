@@ -19,6 +19,8 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
+    private long dayInMilliseconds = 24 * 60 * 60 * 1000;
+
     public void save(Note note){
         noteRepository.save(note);
         log.info("Note has been saved : {}", note);
@@ -38,13 +40,13 @@ public class NoteService {
             Note note = new Note();
             note.setTitle("Order TerraMon");
             note.setText("Order Smart Terrarium Monitoring for my Terraium");
-            note.setAddAt(new Date(today.getTime() - 76 * 60 * 60 * 1000));
+            note.setAddAt(new Date(today.getTime() - 4 * dayInMilliseconds));
             save(note);
 
             note = new Note();
             note.setTitle("TerraMon on its way");
             note.setText("The package is on its way to me, the pets will be happy");
-            note.setAddAt(new Date(today.getTime() - 48 * 60 * 60 * 1000));
+            note.setAddAt(new Date(today.getTime() - 2 * dayInMilliseconds));
             save(note);
 
             note = new Note();

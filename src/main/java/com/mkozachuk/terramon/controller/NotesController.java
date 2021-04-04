@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class NotesController {
@@ -30,9 +29,8 @@ public class NotesController {
     @GetMapping("/notes")
     public String notesPage(Model model) {
         noteService.addDefaultNotes();
-        List<Note> allNotes = noteService.allNotes();
-        model.addAttribute("newNote", newNote());
-        model.addAttribute("allNotes", allNotes);
+        model.addAttribute("note", newNote());
+        model.addAttribute("allNotes", noteService.allNotes());
         return "notes";
     }
 
@@ -40,6 +38,6 @@ public class NotesController {
     public String processNewNote(Note note) {
         note.setAddAt(new Date());
         noteService.save(note);
-        return "notes";
+        return "redirect:/notes";
     }
 }
