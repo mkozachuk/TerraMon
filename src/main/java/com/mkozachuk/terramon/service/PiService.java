@@ -6,7 +6,7 @@ import com.pi4j.io.gpio.*;
 import com.pi4j.io.w1.W1Device;
 import com.pi4j.io.w1.W1Master;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Controller
+@Service
 public class PiService {
     private static final String LIB_NOT_PRESENT_MESSAGE = "CAN'T FIND Adafruit Library";
     private static final String ERROR_READING = "ERROR_READING";
