@@ -22,9 +22,9 @@ public class CsvService {
     @Value("${terramon.CSVExporterDateFormat}")
     String dateFormat;
 
-    public String exportToCsv(List<? extends Exportable> listToExport) throws IOException {
-        String[] csvHeader = listToExport.get(0).getTableHeaders();
-        String[] nameMapping = listToExport.get(0).getNameMapping();
+    public String exportToCsv(List<? extends Exportable> listForExport) throws IOException {
+        String[] csvHeader = listForExport.get(0).getTableHeaders();
+        String[] nameMapping = listForExport.get(0).getNameMapping();
 
         DateFormat dateFormatter = new SimpleDateFormat(dateFormat);
         String currentDateTime = dateFormatter.format(new Date());
@@ -37,7 +37,7 @@ public class CsvService {
 
         csvWriter.writeHeader(csvHeader);
 
-        for (Object obj : listToExport) {
+        for (Object obj : listForExport) {
             csvWriter.write(obj, nameMapping);
         }
         csvWriter.flush();
