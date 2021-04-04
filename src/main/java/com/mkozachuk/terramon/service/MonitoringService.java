@@ -33,6 +33,37 @@ public class MonitoringService implements Runnable {
     public void run() {
         TerraData actualTerraData = statsCheck();
         terraDataService.save(actualTerraData);
+
+        checkTempForExtremum(actualTerraData);
+        checkHumidityForExtremum(actualTerraData);
+        checkHumidityForVentilation(actualTerraData);
+
+        if (terrarium.isAlert()) {
+            terrarium.setAlertMsg(alertMessage);
+            bot.sendAlertToUser(alertMessage);
+            terrarium.setAlert(false);
+        }else {
+            terrarium.setAlert(false);
+            actualTerraData = null;
+        }
+
+    }
+
+    public TerraData statsCheck() {
+        terrarium.getTempSensor().setCurrentTemp(piService.checkFromTemp());
+        terrarium.getHumiditySensor().setCurrentTemp(piService.checkFromHumidity().getOrDefault("temp", 0.0));
+        terrarium.getHumiditySensor().setCurrentHumidity(piService.checkFromHumidity().getOrDefault("humidity", 0.0));
+
+        TerraData actualTerraData = new TerraData();
+        actualTerraData.setAddAt(new Date());
+        actualTerraData.setTemperature(terrarium.getCurrentTemp());
+        actualTerraData.setTemperatureFromHumiditySensor(terrarium.getCurrentTempFromHumiditySensor());
+        actualTerraData.setHumidity(terrarium.getCurrentHumidity());
+        log.info("Current TerraData {}", actualTerraData);
+        return actualTerraData;
+    }
+
+    public String checkTempForExtremum(TerraData actualTerraData){
         if (actualTerraData.getTemperature() >= terrarium.getTempMaxAlert()) {
             terrarium.setAlert(true);
             alertMessage = "Too HOT! Current temp is : " + actualTerraData.getTemperature() + " °C";
@@ -44,7 +75,10 @@ public class MonitoringService implements Runnable {
             alertMessage = "Too Cold! Current temp is : " + actualTerraData.getTemperature() + " °C";
             log.warn("Too Cold! Current temp is : {}", actualTerraData.getTemperature());
         }
+        return alertMessage;
+    }
 
+    public String checkHumidityForExtremum(TerraData actualTerraData){
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxAlert()) {
             terrarium.setAlert(true);
             alertMessage = "Too Wet! Current humidity is : " + actualTerraData.getHumidity() + " %";
@@ -58,7 +92,10 @@ public class MonitoringService implements Runnable {
             log.warn("Too Dry! Current humidity is : {}", actualTerraData.getHumidity());
             terrarium.getFan().setOn(piService.stopFan());
         }
+        return alertMessage;
+    }
 
+    public void checkHumidityForVentilation(TerraData actualTerraData){
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxOkLevel()) {
             log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {} %", actualTerraData.getHumidity());
             terrarium.getFan().setOn(piService.startFan());
@@ -68,29 +105,6 @@ public class MonitoringService implements Runnable {
             log.warn("A bit too Dry! Stopping the fan...\nCurrent humidity is : {} %", actualTerraData.getHumidity());
             terrarium.getFan().setOn(piService.stopFan());
         }
-        if (terrarium.isAlert()) {
-            terrarium.setAlertMsg(alertMessage);
-            bot.sendAlertToUser(alertMessage);
-            terrarium.setAlert(false);
-        }else {
-            terrarium.setAlert(false);
-            actualTerraData = null;
-        }
-
-    }
-
-    private TerraData statsCheck() {
-        terrarium.getTempSensor().setCurrentTemp(piService.checkFromTemp());
-        terrarium.getHumiditySensor().setCurrentTemp(piService.checkFromHumidity().getOrDefault("temp", 0.0));
-        terrarium.getHumiditySensor().setCurrentHumidity(piService.checkFromHumidity().getOrDefault("humidity", 0.0));
-
-        TerraData actualTerraData = new TerraData();
-        actualTerraData.setAddAt(new Date());
-        actualTerraData.setTemperature(terrarium.getCurrentTemp());
-        actualTerraData.setTemperatureFromHumiditySensor(terrarium.getCurrentTempFromHumiditySensor());
-        actualTerraData.setHumidity(terrarium.getCurrentHumidity());
-        log.info("Current TerraData {}", actualTerraData);
-        return actualTerraData;
     }
 
 
