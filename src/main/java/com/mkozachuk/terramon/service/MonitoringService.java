@@ -1,4 +1,4 @@
-package com.mkozachuk.terramon.controller;
+package com.mkozachuk.terramon.service;
 
 import com.mkozachuk.terramon.bot.TelegramBot;
 import com.mkozachuk.terramon.model.TerraData;
@@ -6,67 +6,67 @@ import com.mkozachuk.terramon.model.Terrarium;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
 @Slf4j
-@Controller
-public class MonitorTask implements Runnable {
+@Service
+public class MonitoringService implements Runnable {
     private Terrarium terrarium;
-    private TerraDataController terraDataController;
+    private TerraDataService terraDataService;
     private TelegramBot bot;
     private String alertMessage;
-    private PiController piController;
+    private PiService piService;
 
 
     @Autowired
-    public MonitorTask(Terrarium terrarium, TerraDataController terraDataController, @Lazy TelegramBot bot, PiController piController) {
+    public MonitoringService(Terrarium terrarium, TerraDataService terraDataService, @Lazy TelegramBot bot, PiService piService) {
         this.terrarium = terrarium;
-        this.terraDataController = terraDataController;
+        this.terraDataService = terraDataService;
         this.bot = bot;
-        this.piController = piController;
+        this.piService = piService;
     }
 
 
     @Override
     public void run() {
-        TerraData actualTerraData = statsCheckTask();
-        terraDataController.save(actualTerraData);
+        TerraData actualTerraData = statsCheck();
+        terraDataService.save(actualTerraData);
         if (actualTerraData.getTemperature() >= terrarium.getTempMaxAlert()) {
             terrarium.setAlert(true);
-            alertMessage = "Too HOT! Current temp is : " + actualTerraData.getTemperature();
+            alertMessage = "Too HOT! Current temp is : " + actualTerraData.getTemperature() + " °C";
             log.warn("Too HOT! Current temp is : {}", actualTerraData.getTemperature());
         }
 
         if (actualTerraData.getTemperature() <= terrarium.getTempMinAlert()) {
             terrarium.setAlert(true);
-            alertMessage = "Too Cold! Current temp is : " + actualTerraData.getTemperature();
+            alertMessage = "Too Cold! Current temp is : " + actualTerraData.getTemperature() + " °C";
             log.warn("Too Cold! Current temp is : {}", actualTerraData.getTemperature());
         }
 
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxAlert()) {
             terrarium.setAlert(true);
-            alertMessage = "Too Wet! Current humidity is : " + actualTerraData.getHumidity();
+            alertMessage = "Too Wet! Current humidity is : " + actualTerraData.getHumidity() + " %";
             log.warn("Too Wet! Current humidity is : {}", actualTerraData.getHumidity());
-            terrarium.getFan().setOn(piController.startFan());
+            terrarium.getFan().setOn(piService.startFan());
         }
 
         if (actualTerraData.getHumidity() <= terrarium.getHumidityMinAlert()) {
             terrarium.setAlert(true);
-            alertMessage = "Too Dry! Current humidity is : " + actualTerraData.getHumidity();
+            alertMessage = "Too Dry! Current humidity is : " + actualTerraData.getHumidity() + " %";
             log.warn("Too Dry! Current humidity is : {}", actualTerraData.getHumidity());
-            terrarium.getFan().setOn(piController.stopFan());
+            terrarium.getFan().setOn(piService.stopFan());
         }
 
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxOkLevel()) {
-            log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {}", actualTerraData.getHumidity());
-            terrarium.getFan().setOn(piController.startFan());
+            log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {} %", actualTerraData.getHumidity());
+            terrarium.getFan().setOn(piService.startFan());
         }
 
         if (actualTerraData.getHumidity() <= terrarium.getHumidityMinOkLevel()) {
-            log.warn("A bit too Dry! Stopping the fan...\nCurrent humidity is : {}", actualTerraData.getHumidity());
-            terrarium.getFan().setOn(piController.stopFan());
+            log.warn("A bit too Dry! Stopping the fan...\nCurrent humidity is : {} %", actualTerraData.getHumidity());
+            terrarium.getFan().setOn(piService.stopFan());
         }
         if (terrarium.isAlert()) {
             terrarium.setAlertMsg(alertMessage);
@@ -79,10 +79,10 @@ public class MonitorTask implements Runnable {
 
     }
 
-    private TerraData statsCheckTask() {
-        terrarium.getTempSensor().setCurrentTemp(piController.checkFromTemp());
-        terrarium.getHumiditySensor().setCurrentTemp(piController.checkFromHumidity().getOrDefault("temp", 0.0));
-        terrarium.getHumiditySensor().setCurrentHumidity(piController.checkFromHumidity().getOrDefault("humidity", 0.0));
+    private TerraData statsCheck() {
+        terrarium.getTempSensor().setCurrentTemp(piService.checkFromTemp());
+        terrarium.getHumiditySensor().setCurrentTemp(piService.checkFromHumidity().getOrDefault("temp", 0.0));
+        terrarium.getHumiditySensor().setCurrentHumidity(piService.checkFromHumidity().getOrDefault("humidity", 0.0));
 
         TerraData actualTerraData = new TerraData();
         actualTerraData.setAddAt(new Date());
@@ -92,5 +92,6 @@ public class MonitorTask implements Runnable {
         log.info("Current TerraData {}", actualTerraData);
         return actualTerraData;
     }
+
 
 }
