@@ -19,6 +19,15 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 
 -----
 
+## About
+
+- **24/7 temperature & humidity monitoring**: You can be sure that your pets/plants have the best conditions that they need
+- **Data collecting:** Whole data saved in lightweight database in your device
+- **Automatic air flows:** Set extreme values for humidity level and fan will automatically try to hold humidity between this values
+- **Possibility to save notes:** Something important happens in your Terrarium World? Wright notes about it - it'll be saved in database
+- **Data Export:** Could be use for analyses and experiments
+- **Alert Notifications:** Get notifications to your personal telegram Bot if temperature or humidity reach the extreme level
+- **Accessibility:** You can get access to current sensor data from everywhere via Telegram Bot
 
 ## Hardware
 
@@ -123,4 +132,19 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
 
 #
 
+## Device
 
+**TerraMon Case available on Thingiverse**
+https://www.thingiverse.com/thing:4813437
+
+<p align="center">
+        <strong>TerraMon Case</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-device.jpg">
+</p>
+
+<p align="center">
+        <strong>TerraMon Device</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-device1.jpg">
+</p>
