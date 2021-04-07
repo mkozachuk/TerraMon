@@ -2,6 +2,7 @@ package com.mkozachuk.terramon.model;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -18,25 +19,16 @@ public class Terrarium {
     private double humidityMaxOkLevel;
 
     private boolean alert;
+    private String alertMsg;
     private boolean monitorOn;
-
-    private long defaultMonitorDaley = 300000;
+    @Value("${terrarium.defaultMonitorDaley}")
+    private long defaultMonitorDaley; //180000 = 3min
 
 
     private Fan fan = new Fan();
     private TempSensor tempSensor = new TempSensor();
     private HumiditySensor humiditySensor = new HumiditySensor();
 
-
-    public void startFan(){
-        fan.setOn(true);
-        log.info("Fan has been started");
-    }
-
-    public void stopFan(){
-        fan.setOn(false);
-        log.info("Fan has been stopped");
-    }
 
     public boolean getFanStatus(){
         log.info("Fan status : {}", fan.isOn());
@@ -60,20 +52,14 @@ public class Terrarium {
         return humiditySensor.getCurrentHumidity();
     }
 
-    public void lowDownHumidity (){
-        if(getCurrentHumidity() >= humidityMaxAlert) {
-            if (!getFanStatus()) {
-                startFan();
-            }
-        }
-    }
-
-    public void increaseHumidity (){
-        if(getCurrentHumidity() <= humidityMinAlert) {
-            if (getFanStatus()) {
-                stopFan();
-            }
-        }
+    public void defaultValues(){
+        defaultFanSpeed = 100;
+        tempMinAlert = 22;
+        tempMaxAlert = 28;
+        humidityMinAlert = 40;
+        humidityMaxAlert = 65;
+        humidityMinOkLevel = 45;
+        humidityMaxOkLevel = 60;
     }
 
 

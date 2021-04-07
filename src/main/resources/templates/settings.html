@@ -55,12 +55,12 @@
                         <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                 </li>
                 <li>
-                    <a th:href="@{/data/notes}">
+                    <a th:href="@{/notes}">
                         <i class="fas fa-clipboard"></i>Notes</a>
                 </li>
 
                 <li>
-                    <a th:href="@{/data/settings}">
+                    <a th:href="@{/settings}">
                         <i class="fas fa-cogs"></i>Settings</a>
 
                 </li>
@@ -90,12 +90,12 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/data/notes}">
+                    <a th:href="@{/notes}">
                         <i class="fas fa-clipboard"></i>Notes</a>
                 </li>
 
                 <li class="active">
-                    <a th:href="@{/data/settings}">
+                    <a th:href="@{/settings}">
                         <i class="fas fa-cogs"></i>Settings</a>
                 </li>
                 <li>
@@ -212,7 +212,7 @@
                                 <strong>Change Settings</strong>
                             </div>
                             <div class="card-body card-block">
-                                <form method="POST" th:action="@{/data/settings}" th:object="${terrarium}"
+                                <form method="POST" th:action="@{/settings/save}" th:object="${terrarium}"
                                       class="form-horizontal">
 
                                     <div class="row form-group">

@@ -55,12 +55,12 @@
                         <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                 </li>
                 <li>
-                    <a th:href="@{/data/notes}">
+                    <a th:href="@{/notes}">
                         <i class="fas fa-clipboard"></i>Notes</a>
                 </li>
 
                 <li>
-                    <a th:href="@{/data/settings}">
+                    <a th:href="@{/settings}">
                         <i class="fas fa-cogs"></i>Settings</a>
 
                 </li>
@@ -90,12 +90,12 @@
                 </li>
 
                 <li class="active">
-                    <a th:href="@{/data/notes}">
+                    <a th:href="@{/notes}">
                         <i class="fas fa-clipboard"></i>Notes</a>
                 </li>
 
                 <li>
-                    <a th:href="@{/data/settings}">
+                    <a th:href="@{/settings}">
                         <i class="fas fa-cogs"></i>Settings</a>
                 </li>
                 <li>
@@ -133,7 +133,7 @@
                                 <strong>Add new note</strong>
                             </div>
                             <div class="card-body card-block">
-                                <form method="POST" th:action="@{/data/notes}" th:object="${newNote}"
+                                <form method="POST" th:action="@{/notes/save}" th:object="${note}"
                                       class="form-horizontal">
                                     <div class="row form-group col-md-12">
                                         <div class="col col-md-2">
