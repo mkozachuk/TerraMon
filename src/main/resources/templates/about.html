@@ -146,7 +146,7 @@
                             <div class="card">
                                 <img class="card-img-top" th:src="@{images/terraMonJungle.png}" alt="TerraMon">
                                 <div class="card-body">
-                                    <h4 class="card-title mb-3">Your Personal Smart Terrarium Monitor</h4>
+                                    <h4 class="card-title mb-3" id="card-title">Your Personal Smart Terrarium Monitor</h4>
                                     <p class="card-text" th:text="'Version : ' + ${version} + '     '">Version: <a th:href="${urlToUpdate}" th:class="${isNewVersion} ? 'btn btn-outline-danger btn-sm' : 'btn btn-outline-success btn-sm'" th:text="${isNewVersion} ? 'Update' : 'Up to date'">Check for Update</a></p>
                                     <br>
                                     <p class="card-text">Your Telegram Bot : <a th:text="${botname}" th:href="'https://t.me/' + ${botname}">botname</a></p>
