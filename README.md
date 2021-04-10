@@ -1,4 +1,3 @@
-Current Version [1.0.1]
 <p align="center">
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-cut.png?raw=true" width="600" alt="TerraMon">
     <br>
@@ -128,6 +127,12 @@ The TerraMon is a Smart Terrarium Monitoring System that collect temperature and
         <strong>About</strong>
         <br>
         <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/aabout.jpg">
+</p>
+
+<p align="center">
+        <strong>Tellegram Bot</strong>
+        <br>
+        <img src="https://github.com/mkozachuk/TerraMon/blob/master/docs/terramon-telegram-bot.jpg" width="300">
 </p>
 
 #
