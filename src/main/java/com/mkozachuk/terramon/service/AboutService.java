@@ -1,5 +1,6 @@
 package com.mkozachuk.terramon.service;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 public class AboutService {
 
     @Value("${terramon.version}")
+    @Setter
     private String version;
 
     @Value("${bot.token}")

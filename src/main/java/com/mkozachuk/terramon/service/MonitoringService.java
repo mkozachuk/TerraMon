@@ -107,5 +107,9 @@ public class MonitoringService implements Runnable {
         }
     }
 
+    public Terrarium getTerrarium(){
+        return terrarium;
+    }
+
 
 }
