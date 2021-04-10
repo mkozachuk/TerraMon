@@ -21,9 +21,9 @@ public class NoteService {
 
     private long dayInMilliseconds = 24 * 60 * 60 * 1000;
 
-    public void save(Note note){
-        noteRepository.save(note);
+    public Note save(Note note){
         log.info("Note has been saved : {}", note);
+        return noteRepository.save(note);
     }
 
     public List<Note> allNotes(){
