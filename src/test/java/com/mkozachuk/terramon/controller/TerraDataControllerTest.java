@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest
-class TerraDataControllerTest {
+public class TerraDataControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

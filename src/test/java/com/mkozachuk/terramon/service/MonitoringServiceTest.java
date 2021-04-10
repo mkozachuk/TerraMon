@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @TestPropertySource(locations = "/test-application.properties")
-class MonitoringServiceTest {
+public class MonitoringServiceTest {
 
     @Autowired
     private MonitoringService monitoringService;
