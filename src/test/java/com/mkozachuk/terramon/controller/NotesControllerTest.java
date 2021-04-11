@@ -5,7 +5,7 @@ import com.mkozachuk.terramon.model.Terrarium;
 import com.mkozachuk.terramon.service.AboutService;
 import com.mkozachuk.terramon.service.NoteService;
 import com.mkozachuk.terramon.service.TerraDataService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -42,7 +42,7 @@ public class NotesControllerTest {
     private Note note;
 
     @Test
-    void notesPageTest() throws Exception {
+    public void notesPageTest() throws Exception {
         mockMvc.perform(get("/notes"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("notes"))
@@ -51,7 +51,7 @@ public class NotesControllerTest {
     }
 
     @Test
-    void processNewNoteTest() throws Exception {
+    public void processNewNoteTest() throws Exception {
         when(noteService.save(note))
                 .thenReturn(note);
 

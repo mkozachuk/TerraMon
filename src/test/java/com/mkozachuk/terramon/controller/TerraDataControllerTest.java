@@ -4,7 +4,7 @@ import com.mkozachuk.terramon.model.Terrarium;
 import com.mkozachuk.terramon.service.AboutService;
 import com.mkozachuk.terramon.service.NoteService;
 import com.mkozachuk.terramon.service.TerraDataService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,7 +36,7 @@ public class TerraDataControllerTest {
     private TerraDataService terraDataService;
 
     @Test
-    void mainDataPageTest() throws Exception {
+    public void mainDataPageTest() throws Exception {
         mockMvc.perform(get("/data"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("data"))

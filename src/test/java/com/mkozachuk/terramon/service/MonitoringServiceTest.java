@@ -3,8 +3,8 @@ package com.mkozachuk.terramon.service;
 import com.mkozachuk.terramon.model.TerraData;
 import com.mkozachuk.terramon.model.Terrarium;
 import org.junit.After;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +28,7 @@ public class MonitoringServiceTest {
 
     private TerraData actualTerraData;
 
-    @BeforeEach
+    @Before
     public void newTerraData(){
         Terrarium terrarium = monitoringService.getTerrarium();
         terrarium.setTempMinAlert(20);
@@ -50,7 +50,7 @@ public class MonitoringServiceTest {
 
 
     @Test
-    void shouldSetAlertTrueIfToHot() {
+    public void shouldSetAlertTrueIfToHot() {
         actualTerraData.setTemperature(41);
 
         monitoringService.checkTempForExtremum(actualTerraData);
@@ -59,7 +59,7 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldSetAlertTrueIfToCold() {
+    public void shouldSetAlertTrueIfToCold() {
         actualTerraData.setTemperature(19);
 
         monitoringService.checkTempForExtremum(actualTerraData);
@@ -68,14 +68,14 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldSetAlertMessageIfToHot() {
+    public void shouldSetAlertMessageIfToHot() {
         actualTerraData.setTemperature(41);
 
         assertEquals("Too HOT! Current temp is : 41.0 °C",
                 monitoringService.checkTempForExtremum(actualTerraData));
     }
     @Test
-    void shouldSetAlertMessageIfToCold() {
+    public void shouldSetAlertMessageIfToCold() {
         actualTerraData.setTemperature(19);
 
         assertEquals("Too Cold! Current temp is : 19.0 °C",
@@ -83,7 +83,7 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldSetAlertTrueIfToWet() {
+    public void shouldSetAlertTrueIfToWet() {
         actualTerraData.setHumidity(71);
 
         monitoringService.checkHumidityForExtremum(actualTerraData);
@@ -92,7 +92,7 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldSetAlertTrueIfToDry() {
+    public void shouldSetAlertTrueIfToDry() {
         actualTerraData.setHumidity(49);
 
         monitoringService.checkHumidityForExtremum(actualTerraData);
@@ -101,14 +101,14 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldSetAlertMessageIfToWet() {
+    public void shouldSetAlertMessageIfToWet() {
         actualTerraData.setHumidity(71);
 
         assertEquals("Too Wet! Current humidity is : 71.0 %",
                 monitoringService.checkHumidityForExtremum(actualTerraData));
     }
     @Test
-    void shouldSetAlertMessageIfToDry() {
+    public void shouldSetAlertMessageIfToDry() {
         actualTerraData.setHumidity(49);
 
         assertEquals("Too Dry! Current humidity is : 49.0 %",
@@ -116,7 +116,7 @@ public class MonitoringServiceTest {
     }
 
     @Test
-    void shouldStartFanIfABitWet() {
+    public void shouldStartFanIfABitWet() {
         when(piService.startFan()).thenReturn(true);
         actualTerraData.setHumidity(66);
 
@@ -125,7 +125,7 @@ public class MonitoringServiceTest {
         assertTrue(monitoringService.getTerrarium().getFan().isOn());
     }
     @Test
-    void shouldStopFanIfABitDry() {
+    public void shouldStopFanIfABitDry() {
         when(piService.stopFan()).thenReturn(false);
         actualTerraData.setHumidity(54);
 
