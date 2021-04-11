@@ -48,27 +48,7 @@ public class PiService {
             if (cmdResult.length() == 0) // Library is not present
                 throw new RuntimeException(LIB_NOT_PRESENT_MESSAGE);
             else {
-                if (cmdResult.toString().contains(ERROR_READING)) {
-                    String msg = "Error reading the the sensor, maybe is not connected.";
-                    throw new Exception(msg);
-                } else {
-                    log.info("Read completed. Parse and update the values");
-                    String[] values = cmdResult.toString().split("\\*");
-                    float temperature = Float.parseFloat(values[0].replace("Temp=", "").replace("*", "").trim());
-                    float humidity = Float.parseFloat(values[1].replace("Humidity=", "").replace("%", "").trim());
-                    float lastTemp = 0.0f;
-                    float lastHum = 0.0f;
-                    dhtData.put("temp", Double.parseDouble(decimalFormat.format(temperature)));
-                    dhtData.put("humidity", Double.parseDouble(decimalFormat.format(humidity)));
-                    if ((temperature != lastTemp) || (humidity != lastHum)) {
-                        lastUpdate = new Date();
-                        lastTemp = temperature;
-                        lastHum = humidity;
-                        log.info("Last Update : {}", lastUpdate);
-                        log.info("Last Temp : {}", lastTemp);
-                        log.info("Last Humidity : {}", lastHum);
-                    }
-                }
+                setDhtDataToMap(cmdResult, dhtData);
             }
         } catch (Exception e) {
             log.error("Exception {}", e.getMessage());
@@ -78,7 +58,7 @@ public class PiService {
         return dhtData;
     }
 
-    public StringBuilder cmdResult(String cmd){
+    public StringBuilder cmdResult(String cmd) {
         StringBuilder cmdResult = new StringBuilder();
         try {
             String line;
@@ -96,6 +76,31 @@ public class PiService {
         return cmdResult;
     }
 
+    public void setDhtDataToMap(StringBuilder cmdResult, Map<String, Double> dhtData) throws Exception {
+        if (cmdResult.toString().contains(ERROR_READING)) {
+            String msg = "Error reading the the sensor, maybe is not connected.";
+            throw new Exception(msg);
+        } else {
+            log.info("Read completed. Parse and update the values");
+            String[] values = cmdResult.toString().split("\\*");
+            float temperature = Float.parseFloat(values[0].replace("Temp=", "").replace("*", "").trim());
+            float humidity = Float.parseFloat(values[1].replace("Humidity=", "").replace("%", "").trim());
+            float lastTemp = 0.0f;
+            float lastHum = 0.0f;
+            dhtData.put("temp", Double.parseDouble(decimalFormat.format(temperature)));
+            dhtData.put("humidity", Double.parseDouble(decimalFormat.format(humidity)));
+
+            if ((temperature != lastTemp) || (humidity != lastHum)) {
+                lastUpdate = new Date();
+                lastTemp = temperature;
+                lastHum = humidity;
+                log.info("Last Update : {}", lastUpdate);
+                log.info("Last Temp : {}", lastTemp);
+                log.info("Last Humidity : {}", lastHum);
+            }
+        }
+    }
+
     public boolean startFan() {
 
         pin.setState(PinState.HIGH);
@@ -109,13 +114,13 @@ public class PiService {
         return false;
     }
 
-    public void powerOff(){
+    public void powerOff() {
         String cmd = "sudo poweroff";
         try {
             log.warn("Power Off starting...");
             Process p = Runtime.getRuntime().exec(cmd.split(" "));
             p.waitFor();
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Exception when sudo poweroff");
             e.getStackTrace();
         }
