@@ -143,99 +143,97 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String getMessage(String msg, SendMessage message) {
         createKeyboard(keyboardMarkup);
 
-        if (msg.contains("/start") || msg.equals("Menu") || msg.equals("Hello") || msg.equals("menu") || msg.contains("меню") || msg.contains("Меню")) {
-            if (!terrarium.isMonitorOn()) {
-                sendWelcomeSticker(adminChatId.toString());
-                terrarium.setMonitorOn(true);
-                terrarium.defaultValues();
-                noteService.addDefaultNotes();
-                taskScheduler.scheduleWithFixedDelay(new MonitoringService(terrarium, terraDataService, this, piService), terrarium.getDefaultMonitorDaley());
-            }
-            return messages.startMessage(keyboardMarkup, checkServerIp());
+        switch (msg) {
+            case "/start":
+            case "Menu":
+            case "menu":
+            case "Hello":
+                if (!terrarium.isMonitorOn()) {
+                    sendWelcomeSticker(adminChatId.toString());
+                    terrarium.setMonitorOn(true);
+                    terrarium.defaultValues();
+                    noteService.addDefaultNotes();
+                    taskScheduler.scheduleWithFixedDelay(new MonitoringService(terrarium, terraDataService, this, piService), terrarium.getDefaultMonitorDaley());
+                }
+                return messages.startMessage(keyboardMarkup, checkServerIp());
+
+            case "\uD83C\uDF21️ Check \uD83D\uDCA7":
+                return messages.currentTerraStats(monitoringService.statsCheck());
+
+            case "\uD83D\uDCDD Notes":
+                return messages.notes(message);
+
+            case "Export \uD83D\uDCBE":
+                return messages.export(message);
+
+            case "⚙️ Current Settings":
+                return messages.currentSettingsInfo(terrarium);
+
+            case "\uD83D\uDD0E About":
+                return messages.about(aboutService.getVersion(), aboutService.checkForUpdate(), aboutService.getUrlToUpdate(), checkServerIp());
+
+            case "\uD83D\uDD0C PowerOff":
+                return messages.powerOffConfirmation(message);
+
+            default:
+                if (msg.startsWith("Note:")) {
+                    Note note = new Note();
+                    note.setAddAt(new Date());
+                    note.setTitle("Add from Telegram");
+                    note.setText(msg.replace("Note:", ""));
+                    noteService.save(note);
+                    return "Note has been saved";
+                } else
+                    return messages.noAnswer();
         }
 
-        if (msg.equals("\uD83C\uDF21️ Check \uD83D\uDCA7")) {
-            return messages.currentTerraStats(monitoringService.statsCheck());
-        }
-
-        if (msg.equals("\uD83D\uDCDD Notes")) {
-            return messages.notes(message);
-        }
-
-        if (msg.equals("Export \uD83D\uDCBE")) {
-            return messages.export(message);
-        }
-        if (msg.equals("⚙️ Current Settings")) {
-            return messages.currentSettingsInfo(terrarium);
-        }
-
-        if (msg.equals("\uD83D\uDD0E About")) {
-            return messages.about(aboutService.getVersion(), aboutService.checkForUpdate(), aboutService.getUrlToUpdate(), checkServerIp());
-        }
-        if (msg.equals("\uD83D\uDD0C PowerOff")) {
-            return messages.powerOffConfirmation(message);
-        }
-
-        if (msg.startsWith("Note:")) {
-            Note note = new Note();
-            note.setAddAt(new Date());
-            note.setTitle("Add from Telegram");
-            note.setText(msg.replace("Note:", ""));
-            noteService.save(note);
-            return "Note has been saved";
-        }
-
-        return messages.noAnswer();
     }
 
     private EditMessageText getCallback(String callData, Long chatId, int msgId) {
 
-        if (callData.equals("poweroff")) {
-            piService.powerOff();
-            return callbacks.powerOff(chatId, msgId);
-        }
-        if (callData.equals("cancel")) {
-            return callbacks.canceled(chatId, msgId);
-        }
+        switch (callData) {
+            case "powerOff":
+                piService.powerOff();
+                return callbacks.powerOff(chatId, msgId);
 
-        if (callData.equals("addNewNote")) {
-            return callbacks.addNewNote(chatId, msgId);
-        }
+            case "cancel":
+                return callbacks.canceled(chatId, msgId);
 
-        if (callData.equals("last3notes")) {
-            List<Note> last3notes = noteService.last3Notes();
-            for (Note note : last3notes) {
-                String formattedNote = note.getTitle() + "\n" + note.getAddAt() + "\n" + note.getText();
-                sendAlertToUser(formattedNote);
-            }
-            return callbacks.lastNotes(chatId, msgId);
-        }
+            case "addNewNote":
+                return callbacks.addNewNote(chatId, msgId);
 
-        if (callData.equals("exportNotes")) {
-            List<Note> allNotes = noteService.allNotes();
-            try {
-                sendFile(chatId, csvService.exportToCsv(allNotes));
-            } catch (IOException e) {
-                log.warn("IOE when export notes");
-                e.printStackTrace();
-            }
+            case "last3notes":
+                List<Note> last3notes = noteService.last3Notes();
+                for (Note note : last3notes) {
+                    String formattedNote = note.getTitle() + "\n" + note.getAddAt() + "\n" + note.getText();
+                    sendAlertToUser(formattedNote);
+                }
+                return callbacks.lastNotes(chatId, msgId);
 
-            return callbacks.export(chatId, msgId);
-        }
+            case "exportNotes":
+                List<Note> allNotes = noteService.allNotes();
+                try {
+                    sendFile(chatId, csvService.exportToCsv(allNotes));
+                } catch (IOException e) {
+                    log.warn("IOE when export notes");
+                    e.printStackTrace();
+                }
+                return callbacks.export(chatId, msgId);
 
-        if (callData.equals("exportAllTerraData")) {
-            List<TerraData> allTerraData = terraDataService.allTerraData();
-            try {
-                sendFile(chatId, csvService.exportToCsv(allTerraData));
-            } catch (IOException e) {
-                log.warn("IOE when export notes");
-                e.printStackTrace();
-            }
+            case "exportAllTerraData":
+                List<TerraData> allTerraData = terraDataService.allTerraData();
+                try {
+                    sendFile(chatId, csvService.exportToCsv(allTerraData));
+                } catch (IOException e) {
+                    log.warn("IOE when export TerraData");
+                    e.printStackTrace();
+                }
+                return callbacks.export(chatId, msgId);
 
-            return callbacks.export(chatId, msgId);
+            default:
+                return callbacks.callData(callData,chatId,msgId);
         }
 
-        return null;
     }
 
     private void createKeyboard(ReplyKeyboardMarkup keyboardMarkup) {
