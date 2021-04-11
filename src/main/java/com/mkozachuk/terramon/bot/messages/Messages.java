@@ -71,12 +71,9 @@ public class Messages {
     }
 
     public String powerOffConfirmation(SendMessage message) {
-        log.info("poweroffMsg");
-        rowsInline.clear();
-        firstInlineRow.clear();
-        secondInlineRow.clear();
-        thirdInlineRow.clear();
-        firstInlineRow.add(new InlineKeyboardButton().setText("\uD83D\uDCF4 Power Off").setCallbackData("poweroff"));
+        log.info("powerOffMsg");
+        cleanInlineRows();
+        firstInlineRow.add(new InlineKeyboardButton().setText("\uD83D\uDCF4 Power Off").setCallbackData("powerOff"));
         firstInlineRow.add(new InlineKeyboardButton().setText("Cancel ❌").setCallbackData("cancel"));
         rowsInline.add(firstInlineRow);
         inlineMarkup.setKeyboard(rowsInline);
@@ -106,10 +103,7 @@ public class Messages {
 
     public String notes(SendMessage message) {
         log.info("notes");
-        rowsInline.clear();
-        firstInlineRow.clear();
-        secondInlineRow.clear();
-        thirdInlineRow.clear();
+        cleanInlineRows();
         firstInlineRow.add(new InlineKeyboardButton().setText("\uD83D\uDCDD Add new Note").setCallbackData("addNewNote"));
         secondInlineRow.add(new InlineKeyboardButton().setText("Last 3 notes \uD83D\uDDC2️").setCallbackData("last3notes"));
         rowsInline.add(firstInlineRow);
@@ -121,10 +115,7 @@ public class Messages {
 
     public String export(SendMessage message) {
         log.info("export");
-        rowsInline.clear();
-        firstInlineRow.clear();
-        secondInlineRow.clear();
-        thirdInlineRow.clear();
+        cleanInlineRows();
         firstInlineRow.add(new InlineKeyboardButton().setText("\uD83D\uDCDD All notes️").setCallbackData("exportNotes"));
         secondInlineRow.add(new InlineKeyboardButton().setText("All sensors data \uD83D\uDDF3️️").setCallbackData("exportAllTerraData"));
         rowsInline.add(firstInlineRow);
@@ -136,5 +127,12 @@ public class Messages {
 
     public String noAnswer(){
         return "Sorry I don't understand what you mean, please use buttons";
+    }
+
+    public void cleanInlineRows(){
+        rowsInline.clear();
+        firstInlineRow.clear();
+        secondInlineRow.clear();
+        thirdKeyboardRow.clear();
     }
 }
