@@ -12,41 +12,41 @@ import java.util.List;
 @Service
 @Slf4j
 public class NoteService {
-    private NoteRepository noteRepository;
+
+    private final NoteRepository noteRepository;
+    private static final long DAY_IN_MILLISECONDS = 24L * 60 * 60 * 1000;
 
     @Autowired
-    public NoteService(NoteRepository noteRepository){
+    public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
-    private long dayInMilliseconds = 24 * 60 * 60 * 1000;
-
-    public Note save(Note note){
+    public Note save(Note note) {
         log.info("Note has been saved : {}", note);
         return noteRepository.save(note);
     }
 
-    public List<Note> allNotes(){
+    public List<Note> allNotes() {
         return noteRepository.findAllByOrderByAddAtDesc();
     }
 
-    public List<Note> last3Notes(){
+    public List<Note> last3Notes() {
         return noteRepository.findTop3ByOrderByAddAtDesc();
     }
 
-    public void addDefaultNotes(){
+    public void addDefaultNotes() {
         Date today = new Date();
-        if(last3Notes().size() < 3){
+        if (last3Notes().size() < 3) {
             Note note = new Note();
             note.setTitle("Order TerraMon");
             note.setText("Order Smart Terrarium Monitoring for my Terraium");
-            note.setAddAt(new Date(today.getTime() - 4 * dayInMilliseconds));
+            note.setAddAt(new Date(today.getTime() - 4 * DAY_IN_MILLISECONDS));
             save(note);
 
             note = new Note();
             note.setTitle("TerraMon on its way");
             note.setText("The package is on its way to me, the pets will be happy");
-            note.setAddAt(new Date(today.getTime() - 2 * dayInMilliseconds));
+            note.setAddAt(new Date(today.getTime() - 2 * DAY_IN_MILLISECONDS));
             save(note);
 
             note = new Note();

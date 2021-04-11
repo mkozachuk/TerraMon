@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class SettingsController {
 
-    private Terrarium terrarium;
+    private final Terrarium terrarium;
 
     @Autowired
     public SettingsController(Terrarium terrarium){

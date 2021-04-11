@@ -14,7 +14,7 @@ import java.util.Date;
 @Controller
 public class NotesController {
 
-    private NoteService noteService;
+    private final NoteService noteService;
 
     @Autowired
     public NotesController(NoteService noteService){

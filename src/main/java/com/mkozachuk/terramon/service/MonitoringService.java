@@ -13,12 +13,12 @@ import java.util.Date;
 @Slf4j
 @Service
 public class MonitoringService implements Runnable {
-    private Terrarium terrarium;
-    private TerraDataService terraDataService;
-    private TelegramBot bot;
-    private String alertMessage;
-    private PiService piService;
 
+    private String alertMessage;
+    private final Terrarium terrarium;
+    private final TerraDataService terraDataService;
+    private final TelegramBot bot;
+    private final PiService piService;
 
     @Autowired
     public MonitoringService(Terrarium terrarium, TerraDataService terraDataService, @Lazy TelegramBot bot, PiService piService) {
@@ -27,7 +27,6 @@ public class MonitoringService implements Runnable {
         this.bot = bot;
         this.piService = piService;
     }
-
 
     @Override
     public void run() {
@@ -42,7 +41,7 @@ public class MonitoringService implements Runnable {
             terrarium.setAlertMsg(alertMessage);
             bot.sendAlertToUser(alertMessage);
             terrarium.setAlert(false);
-        }else {
+        } else {
             terrarium.setAlert(false);
             actualTerraData = null;
         }
@@ -63,7 +62,7 @@ public class MonitoringService implements Runnable {
         return actualTerraData;
     }
 
-    public String checkTempForExtremum(TerraData actualTerraData){
+    public String checkTempForExtremum(TerraData actualTerraData) {
         if (actualTerraData.getTemperature() >= terrarium.getTempMaxAlert()) {
             terrarium.setAlert(true);
             alertMessage = "Too HOT! Current temp is : " + actualTerraData.getTemperature() + " °C";
@@ -78,7 +77,7 @@ public class MonitoringService implements Runnable {
         return alertMessage;
     }
 
-    public String checkHumidityForExtremum(TerraData actualTerraData){
+    public String checkHumidityForExtremum(TerraData actualTerraData) {
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxAlert()) {
             terrarium.setAlert(true);
             alertMessage = "Too Wet! Current humidity is : " + actualTerraData.getHumidity() + " %";
@@ -95,7 +94,7 @@ public class MonitoringService implements Runnable {
         return alertMessage;
     }
 
-    public void checkHumidityForVentilation(TerraData actualTerraData){
+    public void checkHumidityForVentilation(TerraData actualTerraData) {
         if (actualTerraData.getHumidity() >= terrarium.getHumidityMaxOkLevel()) {
             log.warn("A bit too Wet! Starting the fan...\nCurrent humidity is : {} %", actualTerraData.getHumidity());
             terrarium.getFan().setOn(piService.startFan());
@@ -107,9 +106,7 @@ public class MonitoringService implements Runnable {
         }
     }
 
-    public Terrarium getTerrarium(){
+    public Terrarium getTerrarium() {
         return terrarium;
     }
-
-
 }

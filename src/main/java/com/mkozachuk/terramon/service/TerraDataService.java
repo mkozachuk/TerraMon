@@ -64,7 +64,7 @@ public class TerraDataService {
 
     }
 
-    public List last100(List anyList){
+    public List<?> last100(List<?> anyList){
         if(moreThan100){
             return anyList.subList(anyList.size() - 100, anyList.size() - 1);
         }else {

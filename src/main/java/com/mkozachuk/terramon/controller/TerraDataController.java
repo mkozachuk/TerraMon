@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class TerraDataController {
-    private Terrarium terrarium;
-    private TerraDataService terraDataService;
-    private NoteService noteService;
+    private final Terrarium terrarium;
+    private final TerraDataService terraDataService;
+    private final NoteService noteService;
 
     @Autowired
     public TerraDataController(Terrarium terrarium, TerraDataService terraDataService, NoteService noteService) {
